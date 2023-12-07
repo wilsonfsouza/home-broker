@@ -16,7 +16,7 @@ type OrderOutput struct {
 	AssetID           string               `json:"asset_id"`
 	OrderType         string               `json:"order_type"`
 	Status            string               `json:"status"`
-	Partial           int                  `json:"partial"`
+	PendingShares     int                  `json:"pending_shares"`
 	Shares            int                  `json:"shares"`
 	TransactionOutput []*TransactionOutput `json:"transactions"`
 }
