@@ -59,6 +59,6 @@ func main() {
 			fmt.Println(error)
 		}
 
-		producer.Publish(orderOutputJson, []byte("output"), "output")
+		producer.Publish(orderOutputJson, []byte("orders"), "output")
 	}
 }
