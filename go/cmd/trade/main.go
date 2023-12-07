@@ -22,13 +22,13 @@ func main() {
 	kafkaMessageChannel := make(chan *ckafka.Message)
 
 	configMap := &ckafka.ConfigMap{
-		"bootstrapi.servers": "host.docker.internal:9094",
-		"group.id":           "myGroup",
-		"auto.offset.reset":  "earliest",
+		"bootstrap.servers": "host.docker.internal:9094",
+		"group.id":          "myGroup",
+		"auto.offset.reset": "latest",
 	}
 
 	producer := kafka.NewKafkaProducer(configMap)
-	kafka := kafka.NewKafkaConsumer(configMap, []string{"orders"})
+	kafka := kafka.NewKafkaConsumer(configMap, []string{"input"})
 
 	go kafka.Consume(kafkaMessageChannel) // T2
 
@@ -38,6 +38,7 @@ func main() {
 	go func() {
 		for kafkaMessage := range kafkaMessageChannel {
 			waitGroup.Add(1)
+			fmt.Println(string(kafkaMessage.Value))
 			tradeInput := dto.TradeInput{}
 			error := json.Unmarshal(kafkaMessage.Value, &tradeInput)
 
@@ -53,11 +54,11 @@ func main() {
 	for res := range ordersOutput {
 		orderOutput := transformer.TransformOrderOutput(res)
 		orderOutputJson, error := json.MarshalIndent(orderOutput, "", "   ")
-
+		fmt.Println(orderOutput)
 		if error != nil {
 			fmt.Println(error)
 		}
 
-		producer.Publish(orderOutputJson, []byte("transactions"), "output")
+		producer.Publish(orderOutputJson, []byte("output"), "output")
 	}
 }
