@@ -28,6 +28,7 @@ export class WalletAssetsService {
         wallet_id: data.wallet_id,
         asset_id: data.asset_id,
         shares: data.shares,
+        version: 1,
       },
     });
   }
