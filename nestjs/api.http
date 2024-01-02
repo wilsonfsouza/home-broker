@@ -25,7 +25,7 @@ POST http://localhost:3000/wallets
 Content-Type: application/json
 
 {
-  "id": "wallet1"
+  "id": "wallet2"
 }
 
 ###
@@ -51,7 +51,6 @@ Content-Type: application/json
 
 {
   "asset_id": "asset1",
-  "wallet_id": "wallet1",
   "shares": 10,
   "price": 5.0,
   "type": "BUY"
